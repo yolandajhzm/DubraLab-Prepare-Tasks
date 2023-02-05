@@ -2,31 +2,57 @@ import numpy as np
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-class Demo(object):
+class DrawShape(object):
     def __init__(self):
-        # self.geometry = geometry
-        glutInit()  # 启动glut
-        glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA)
+        # init glut (fixed steps)
+        glutInit()  
+        glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA) 
         glutInitWindowSize(400, 400)
-        glutCreateWindow(b"Hello OpenGL")  # 设定窗口标题
-        glutDisplayFunc(self.draw_geometry)  # 调用函数绘制
-        self.init_condition()  # 设定背景
+        glutCreateWindow("Hello OpenGL")  
+
+        self.setup()
+        
+        glutDisplayFunc(self.draw_rectangle) 
+        # glutDisplayFunc(self.draw_line) 
         glutMainLoop()
 
-    def init_condition(self):
-        glClearColor(1.0, 1.0, 1.0, 1.0)  # 定义背景为白色
-        gluOrtho2D(-8.0, 8.0, -8.0, 8.0)  # 定义xy轴范围
-    def render(self):
-        pass
-    def draw_geometry(self):
+    def setup(self):
+       glClearColor(1.0, 1.0, 1.0, 1.0) # set background color to white
+    #    gluOrtho2D(-8.0, 8.0, -8.0, 8.0)
+
+    def draw_line(self):
+        # fixed start
         glClear(GL_COLOR_BUFFER_BIT)
-        glColor3f(1.0, 0.0, 0.0)  # 设定颜色RGB
-        glBegin(GL_QUADS)
-        glVertex2f(-2, 2)
-        glVertex2f(-2, 5)
-        glVertex2f(-5, 5)
-        glVertex2f(-5, 2)
+
+        glColor3f(1.0, 0.0, 0.0)  # set color to red
+        glBegin(GL_LINES)
+        glVertex2f(.25, .25)
+        glVertex2f(.75, .75)
         glEnd()
-        glFlush()  # 执行绘图
+        glFlush()  # draw
+
+        # fixed end
+        glutSwapBuffers() 
+    
+    def draw_rectangle(self):
+        # fixed start
+        glClear(GL_COLOR_BUFFER_BIT)
+
+        glColor3f(1.0, 0.0, 0.0)  # set color to red
+        # customized positions
+        glBegin(GL_QUADS)
+        glVertex2f(-0.2, .2)
+        glVertex2f(-0.2, .5)
+        glVertex2f(-0.5, .5)
+        glVertex2f(-0.5, .2)
+        glEnd()
+        # glRectf(-0.75,0.75, 0.75, -0.75)
+        glFlush()  # draw
+
+        # fixed end
+        glutSwapBuffers() 
+
 if __name__ == "__main__":
-    Demo()
+    DrawShape()
+
+# TODO: how to draw multiple shapes in one window?

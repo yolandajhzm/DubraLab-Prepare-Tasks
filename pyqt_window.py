@@ -2,8 +2,6 @@ from PyQt6.QtWidgets import QWidget, QApplication, QLabel, QHBoxLayout, QMainWin
 from PyQt6.QtGui import QImage, QPixmap
 import cv2
 
-# imgs = cv2.imread("cat.png", cv2.IMREAD_GRAYSCALE)
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -11,17 +9,6 @@ class MainWindow(QMainWindow):
         self.setFixedSize(500, 500)
 
 class DisplayImageWindow(QWidget):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.setWindowTitle("Hello World!")
-    #     self.convert = QImage(imgs, imgs.shape[1], imgs.shape[0], imgs.strides[0], QImage.Format.Format_BGR888)
-    #     self.frame = QLabel()
-    #     self.frame.setPixmap(QPixmap.fromImage(self.convert))
-
-    #     self.layout = QHBoxLayout(self)
-    #     self.layout.addWidget(self.frame)
-
-    #     self.show()
     def __init__(self):
         super(DisplayImageWindow, self).__init__()
         img = cv2.imread('cat.png', cv2.IMREAD_GRAYSCALE)
@@ -50,9 +37,7 @@ if __name__ == "__main__":
    
     main_window.show()
     app.exec()
-    # app = QApplication([])
-    # window = MainWindow()
-    # app.exec()
+ 
 
 
 # cite: stackoverflow
