@@ -11,9 +11,11 @@ class DrawShape(object):
         glutCreateWindow("Hello OpenGL")  
 
         self.setup()
-        
+
         glutDisplayFunc(self.draw_rectangle) 
         # glutDisplayFunc(self.draw_line) 
+
+        # glutSwapBuffers()
         glutMainLoop()
 
     def setup(self):
@@ -46,13 +48,14 @@ class DrawShape(object):
         glVertex2f(-0.5, .5)
         glVertex2f(-0.5, .2)
         glEnd()
+
         # glRectf(-0.75,0.75, 0.75, -0.75)
         glFlush()  # draw
 
         # fixed end
-        glutSwapBuffers() 
+        glutSwapBuffers() #？When rendering graphics, you need to exchange buffers, the front buffer is used for rendering, the latter is used for calculation, double buffering
 
 if __name__ == "__main__":
     DrawShape()
 
-# TODO: how to draw multiple shapes in one window?
+# QUESTION: how to draw both shapes in one window, with different methods?

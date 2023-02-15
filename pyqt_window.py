@@ -11,8 +11,14 @@ class MainWindow(QMainWindow):
 class DisplayImageWindow(QWidget):
     def __init__(self):
         super(DisplayImageWindow, self).__init__()
+        # convert image to numpy arrays 
+        # 8 and 16 bits？pixel 8bit: 0-255
         img = cv2.imread('cat.png', cv2.IMREAD_GRAYSCALE)
-        self.convert = QImage(img, img.shape[1], img.shape[0], img.strides[0], QImage.Format.Format_Grayscale8)
+        img16bit = img.astype('uint16')
+        # img = cv2.imread('cat.png', cv2.IMREAD_ANYDEPTH)
+        # self.convert = QImage(img, img.shape[1], img.shape[0], img.strides[0], QImage.Format.Format_Grayscale8)
+        self.convert = QImage(img, img.shape[1], img.shape[0], img.strides[0], QImage.Format.Format_Grayscale16)
+
         self.frame = QLabel()
         self.frame.setPixmap(QPixmap.fromImage(self.convert))
         
@@ -30,6 +36,7 @@ if __name__ == "__main__":
     central_widget = QWidget()
     main_layout = QGridLayout()
     central_widget.setLayout(main_layout)
+
     main_window.setCentralWidget(central_widget)
     
     display_image_widget = DisplayImageWindow()
@@ -38,7 +45,6 @@ if __name__ == "__main__":
     main_window.show()
     app.exec()
  
-
 
 # cite: stackoverflow
 # import sys
@@ -89,3 +95,5 @@ if __name__ == "__main__":
 #     window = Window()
 #     window.show()
 #     sys.exit(app.exec())
+
+# Question： 16 bits monochrome？

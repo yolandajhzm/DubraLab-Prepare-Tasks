@@ -34,3 +34,5 @@ class MyApp(wx.App):
 if __name__ == "__main__":
     app = MyApp()
     app.MainLoop() # infinitely display the window
+
+
