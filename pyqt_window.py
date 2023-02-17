@@ -10,20 +10,29 @@ class MainWindow(QMainWindow):
 
 class DisplayImageWindow(QWidget):
     def __init__(self):
-        super(DisplayImageWindow, self).__init__()
+        super().__init__()
+        # self.setWindowTitle("Hello World!")
+
         # convert image to numpy arrays 
         # 8 and 16 bits？pixel 8bit: 0-255
-        img = cv2.imread('cat.png', cv2.IMREAD_GRAYSCALE)
-        img16bit = img.astype('uint16')
+        # flag = cv2.IMREAD_GRAYSCALE default 8 bits
+        # 0 for grayscale, 1 for color, -1 for unchanged
+        img = cv2.imread('cat.png', 0)
+        print(img.shape)
+        print(img.strides)
+        # img16bit = img.astype('uint16')
         # img = cv2.imread('cat.png', cv2.IMREAD_ANYDEPTH)
-        # self.convert = QImage(img, img.shape[1], img.shape[0], img.strides[0], QImage.Format.Format_Grayscale8)
-        self.convert = QImage(img, img.shape[1], img.shape[0], img.strides[0], QImage.Format.Format_Grayscale16)
+        # Img-data, width, height, bytesPerLine
+        self.convert = QImage(img, img.shape[1], img.shape[0], img.strides[0], QImage.Format.Format_Grayscale8)
+        # self.convert = QImage(img16bit, img16bit.shape[1], img16bit.shape[0], img16bit.strides[0], QImage.Format.Format_Grayscale16)
 
+        # QLabel displays non-editable text or image, or a movie of animated GIF
         self.frame = QLabel()
         self.frame.setPixmap(QPixmap.fromImage(self.convert))
         
-        self.layout = QHBoxLayout(self)
-        self.layout.addWidget(self.frame)
+        # QHBoxLayout line up widgets horizontally and vertically
+        # self.layout = QHBoxLayout(self)
+        # self.layout.addWidget(self.frame)
 
 
 
@@ -33,67 +42,20 @@ if __name__ == "__main__":
     # background window
     main_window = MainWindow()
     
+    # MainWindow has fixed layout, so we should add central widget here
+    # widget add layout AND layout add widget
     central_widget = QWidget()
-    main_layout = QGridLayout()
+    main_layout = QHBoxLayout()
+    display_image_widget = DisplayImageWindow()
+
+    main_layout.addWidget(display_image_widget.frame)
     central_widget.setLayout(main_layout)
 
-    main_window.setCentralWidget(central_widget)
     
-    display_image_widget = DisplayImageWindow()
-    main_layout.addWidget(display_image_widget, 0, 0)
+    # if we set central widget as display_image-widget.frame, there won't be white space around the image
+    main_window.setCentralWidget(central_widget)
    
     main_window.show()
     app.exec()
  
 
-# cite: stackoverflow
-# import sys
-# from PyQt6 import QtCore, QtWidgets, QtOpenGLWidgets, QtGui
-# from OpenGL.GL import *
-
-# class Window(QtWidgets.QWidget):
-#     def __init__(self):
-#         super(Window, self).__init__()
-#         self.glWidget = GLWidget()
-#         mainLayout = QtWidgets.QHBoxLayout()
-#         mainLayout.addWidget(self.glWidget)
-#         mainLayout.setContentsMargins(0,0,0,0)
-#         self.setLayout(mainLayout)
-#         self.setWindowTitle("Biovis")
-
-# class GLWidget(QtOpenGLWidgets.QOpenGLWidget):
-#     def __init__(self, parent=None):
-#         super(GLWidget, self).__init__(parent)
-
-#     def minimumSizeHint(self):
-#         return QtCore.QSize(200, 200)
-
-#     def sizeHint(self):
-#         return QtCore.QSize(400, 400)
-
-#     def initializeGL(self):
-#         glClearColor(1, 0, 0, 1)
-
-#     def paintGL(self):
-#         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-#         glBegin(GL_TRIANGLES)
-#         glVertex(-1, -1, 0)
-#         glVertex(0, 1, 0)
-#         glVertex(1, -1, 0)
-#         glEnd()
-
-#     def resizeGL(self, width, height):
-#         glMatrixMode(GL_PROJECTION)
-#         glLoadIdentity()
-#         glViewport(0, 0, width, height)
-#         glOrtho(-1, 1, -1, 1, -1, 1)
-#         glMatrixMode(GL_MODELVIEW)
-#         glLoadIdentity()
-
-# if __name__ == '__main__':
-#     app = QtWidgets.QApplication(sys.argv)
-#     window = Window()
-#     window.show()
-#     sys.exit(app.exec())
-
-# Question： 16 bits monochrome？

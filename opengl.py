@@ -12,8 +12,8 @@ class DrawShape(object):
 
         self.setup()
 
-        glutDisplayFunc(self.draw_rectangle) 
-        # glutDisplayFunc(self.draw_line) 
+        # glutDisplayFunc(self.draw_rectangle) 
+        glutDisplayFunc(self.draw_line) 
 
         # glutSwapBuffers()
         glutMainLoop()
@@ -53,7 +53,7 @@ class DrawShape(object):
         glFlush()  # draw
 
         # fixed end
-        glutSwapBuffers() #？When rendering graphics, you need to exchange buffers, the front buffer is used for rendering, the latter is used for calculation, double buffering
+        glutSwapBuffers() # When rendering graphics, you need to exchange buffers, the front buffer is used for rendering, the latter is used for calculation, double buffering
 
 if __name__ == "__main__":
     DrawShape()
